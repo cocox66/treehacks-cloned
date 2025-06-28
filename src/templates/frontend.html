@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Morpheus - ASL Translation with Ray-Ban</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Righteous&family=Great+Vibes&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0A192F 0%, #051630 100%);
+            min-height: 100vh;
+            color: #E6F1FF;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            position: relative;
+        }
+
+        .logo {
+            font-size: 60px;
+            font-weight: bold;
+            color: #ffffff;
+            font-family: 'Great Vibes', cursive;
+            background: linear-gradient(45deg, #64FFDA, #0A8BFF);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 30px rgba(10, 139, 255, 0.4);
+            letter-spacing: 2px;
+            transform: scale(1);
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+            text-shadow: 0 0 40px rgba(10, 139, 255, 0.6);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #E6F1FF;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            text-shadow: none;
+            letter-spacing: normal;
+        }
+
+        .nav-links a:hover {
+            color: #64FFDA;
+        }
+
+        .account-icon {
+            color: #F1FAEE;
+            font-size: 20px;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .account-icon:hover {
+            color: #E63946;
+        }
+
+        .connection-status {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #172A45;
+            color: #64FFDA;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            z-index: 100;
+            width: fit-content;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background: #64FFDA;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        .hero {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 80px 0;
+        }
+
+        .hero-content {
+            flex: 1;
+            padding-right: 50px;
+        }
+
+        .hero-image {
+            flex: 1;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero-image img {
+            max-width: 100%;
+            height: auto;
+            width: 375px;
+            height: 812px;
+            border-radius: 10px 10px 0 0;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+            background: white;
+        }
+
+        h1 {
+            font-size: 48px;
+            color: #E6F1FF;
+            margin-bottom: 20px;
+            line-height: 1.2;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            font-weight: 800;
+            letter-spacing: normal;
+            transform: scale(1);
+            transition: transform 0.3s ease;
+        }
+
+        h1:hover {
+            transform: scale(1.01);
+            text-shadow: 0 0 40px rgba(255, 255, 255, 0.5);
+        }
+
+        .hero-text {
+            font-size: 18px;
+            color: #8892B0;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+        }
+
+        .primary-btn {
+            background: linear-gradient(45deg, #0A8BFF, #64FFDA);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 30px;
+            border: none;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .secondary-btn {
+            background: transparent;
+            color: #64FFDA;
+            padding: 15px 30px;
+            border-radius: 30px;
+            border: 2px solid #64FFDA;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .primary-btn:hover, .secondary-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(100, 255, 218, 0.2);
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            padding: 60px 0;
+        }
+
+        .feature-card {
+            background: rgba(23, 42, 69, 0.7);
+            backdrop-filter: blur(10px);
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease;
+            border: 1px solid rgba(100, 255, 218, 0.1);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            border: 1px solid rgba(100, 255, 218, 0.3);
+        }
+
+        .feature-card h3 {
+            margin: 20px 0;
+            color: #E6F1FF;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            text-shadow: none;
+            letter-spacing: normal;
+        }
+
+        .feature-card p {
+            color: #8892B0;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 768px) {
+            .hero {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .hero-content {
+                padding-right: 0;
+                margin-bottom: 40px;
+            }
+
+            .features {
+                grid-template-columns: 1fr;
+            }
+
+            .cta-buttons {
+                justify-content: center;
+            }
+
+            h1 {
+                font-size: 36px;
+            }
+
+            .connection-status {
+                position: absolute;
+                top: 20px;
+                right: 20px;
+                margin-bottom: 0;
+            }
+        }
+
+        .why-section {
+            padding: 60px 0;
+            background: rgba(23, 42, 69, 0.7);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            margin: 40px 0;
+            border: 1px solid rgba(100, 255, 218, 0.1);
+        }
+
+        .why-content {
+            padding: 0 40px;
+        }
+
+        .why-content h2 {
+            font-size: 36px;
+            color: #E6F1FF;
+            margin-bottom: 30px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            text-shadow: none;
+            letter-spacing: normal;
+        }
+
+        .benefit-group {
+            margin-bottom: 30px;
+        }
+
+        .benefit-group h3 {
+            color: #64FFDA;
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+
+        .benefit-group p {
+            color: #8892B0;
+            line-height: 1.6;
+            font-size: 16px;
+        }
+
+        /* New styles for tabs and subtitles */
+        .video-tabs {
+            width: 375px;
+            display: flex;
+            margin: 0;
+            background: #172A45;
+            border-radius: 0 0 10px 10px;
+        }
+
+        .video-tab {
+            flex: 1;
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+            color: #8892B0;
+            transition: all 0.3s ease;
+            border-bottom: 2px solid transparent;
+        }
+
+        .video-tab.active {
+            color: #64FFDA;
+            border-bottom: 2px solid #64FFDA;
+        }
+
+        .video-tab:hover {
+            color: #64FFDA;
+        }
+
+        .subtitles-container {
+            width: 375px;
+            margin: 20px 0 0;
+            padding: 15px;
+            background: rgba(23, 42, 69, 0.95);
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .subtitle-line {
+            margin-bottom: 10px;
+        }
+
+        .subtitle-line.original {
+            color: #8892B0;
+        }
+
+        .subtitle-line.translated {
+            color: #E6F1FF;
+            font-weight: 500;
+        }
+
+        /* Add new styles for video elements */
+        .video-container {
+            width: 375px;
+            height: 812px;
+            position: relative;
+            display: none;
+        }
+
+        #camera-feed {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 10px 10px 0 0;
+        }
+
+        .account-circle {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(45deg, #0A8BFF, #64FFDA);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .account-circle:hover {
+            background: linear-gradient(45deg, #64FFDA, #0A8BFF);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <nav>
+            <div class="logo">Morpheus</div>
+            <div class="nav-links">
+                <a href="#why">Why Morpheus?</a>
+                <div class="account-circle">M</div>
+            </div>
+        </nav>
+
+        <div class="hero">
+            <div class="hero-content">
+                <h1>Transform Sign Language Into Text</h1>
+                <p class="hero-text">
+                    Experience real-time ASL translation with Meta Ray-Ban smart glasses. 
+                    Break down communication barriers and connect with the deaf community 
+                    like never before.
+                </p>
+                <div class="cta-buttons">
+                    <button class="primary-btn" onclick="watchDemo()">Watch Demo</button>
+                </div>
+            </div>
+            <div class="hero-image">
+                <img src="https://placehold.co/375x812/FFFFFF/CCCCCC" alt="Ray-Ban Smart Glasses" id="placeholder-img">
+                <div class="video-container">
+                    <img id="camera-feed" src="http://localhost:5000/video_feed" style="width: 100%; height: 100%; object-fit: cover; border-radius: 10px 10px 0 0;">
+                </div>
+                <input type="file" id="video-upload" accept="video/*" style="display: none;">
+                <div class="connection-status">
+                    <span class="status-dot"></span>
+                    Ray-Ban Connected
+                </div>
+                <div class="video-tabs">
+                    <div class="video-tab active" onclick="switchTab('upload')">Upload Video</div>
+                    <div class="video-tab" onclick="switchTab('record')">Start Recording</div>
+                </div>
+                <div class="subtitles-container">
+                    <div class="subtitle-line translated">Translated English</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="features" id="features">
+            <div class="feature-card">
+                <h3>Real-Time Translation</h3>
+                <p>Instantly translate ASL to text with advanced AI technology and Ray-Ban's smart glasses.</p>
+            </div>
+            <div class="feature-card">
+                <h3>High Accuracy</h3>
+                <p>Powered by Meta's advanced machine learning models for precise sign language recognition.</p>
+            </div>
+            <div class="feature-card">
+                <h3>Easy to Use</h3>
+                <p>Simple and intuitive interface that works seamlessly with Ray-Ban smart glasses.</p>
+            </div>
+        </div>
+
+        <div class="why-section" id="why">
+            <div class="why-content">
+                <h2>Why is Morpheus Needed?</h2>
+                
+                <div class="benefit-group">
+                    <h3>For Teachers</h3>
+                    <p>Enable seamless communication with deaf and hard-of-hearing students in real-time. No need for additional sign language interpreters, making education more accessible and inclusive. Improve classroom dynamics and ensure every student can participate fully in discussions.</p>
+                </div>
+
+                <div class="benefit-group">
+                    <h3>For Deaf and Hard-of-Hearing Students</h3>
+                    <p>Experience greater independence in educational settings. Participate in classroom discussions naturally without waiting for interpreter assistance. Access immediate translation of sign language to text, making communication with peers and teachers effortless.</p>
+                </div>
+
+                <div class="benefit-group">
+                    <h3>For Educational Institutions</h3>
+                    <p>Reduce costs associated with hiring full-time interpreters while providing better accessibility. Create a more inclusive learning environment that attracts diverse students. Comply with accessibility requirements using cutting-edge technology.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize camera when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            initializeCamera();
+            // Set recording tab as active by default
+            const recordTab = document.querySelector('.video-tab:nth-child(2)');
+            recordTab.click();
+        });
+
+        async function initializeCamera() {
+            try {
+                // Show video container and hide placeholder image
+                document.querySelector('.video-container').style.display = 'block';
+                document.getElementById('placeholder-img').style.display = 'none';
+                
+                // The video feed will automatically start from the Flask server
+            } catch (err) {
+                console.error('Error accessing video feed:', err);
+                alert('Unable to access video feed. Please make sure the server is running.');
+            }
+        }
+
+        function watchDemo() {
+            alert('Opening demo video...');
+            // Add your demo video logic here
+        }
+
+        function switchTab(tab) {
+            const tabs = document.querySelectorAll('.video-tab');
+            tabs.forEach(t => t.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            if (tab === 'upload') {
+                // Trigger file upload dialog
+                document.getElementById('video-upload').click();
+                
+                // Hide video container and show placeholder for now
+                document.querySelector('.video-container').style.display = 'none';
+                document.getElementById('placeholder-img').style.display = 'block';
+            } else {
+                // Show video container and hide placeholder image
+                document.querySelector('.video-container').style.display = 'block';
+                document.getElementById('placeholder-img').style.display = 'none';
+                initializeCamera();
+            }
+        }
+
+        // Add new function to handle video upload
+        document.getElementById('video-upload').addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const videoURL = URL.createObjectURL(file);
+                const videoElement = document.getElementById('camera-feed');
+                
+                // Switch to video container
+                document.querySelector('.video-container').style.display = 'block';
+                document.getElementById('placeholder-img').style.display = 'none';
+                
+                // Set up video playback
+                videoElement.src = videoURL;
+                videoElement.srcObject = null; // Remove any existing camera stream
+                videoElement.controls = true; // Add video controls
+                videoElement.play();
+            }
+        });
+    </script>
+</body>
+</html>
